@@ -11,11 +11,64 @@
 	"lastUpdated": "2023-11-24 10:19:35"
 }
 
-   
+	// lookup table that maps [item types](https://api.zotero.org/itemTypes) to labels
+	const itemTypeLabels = {
+		'artwork': 'Artwork',
+		'audioRecording': 'Audio Recording',
+		'bill': 'Bill',
+		'blogPost': 'Blog Post',
+		'book': 'Book',
+		'bookSection': 'Book Section',
+		'case': 'Case',
+		'conferencePaper': 'Conference Paper',
+		'dataset': 'Dataset',
+		'dictionaryEntry': 'Dictionary Entry',
+		'document': 'Document',
+		'email': 'E-mail',
+		'encyclopediaArticle': 'Encyclopedia Article',
+		'film': 'Film',
+		'forumPost': 'Forum Post',
+		'hearing': 'Hearing',
+		'instantMessage': 'Instant Message',
+		'interview': 'Interview',
+		'journalArticle': 'Journal Article',
+		'letter': 'Letter',
+		'magazineArticle': 'Magazine Article',
+		'manuscript': 'Manuscript',
+		'map': 'Map',
+		'newspaperArticle': 'Newspaper Article',
+		'note': 'Note',
+		'patent': 'Patent',
+		'podcast': 'Podcast',
+		'presentation': 'Presentation',
+		'radioBroadcast': 'Radio Broadcast',
+		'report': 'Report',
+		'computerProgram': 'Software',
+		'standard': 'Standard',
+		'statute': 'Statute',
+		'tvBroadcast': 'TV Broadcast',
+		'thesis': 'Thesis',
+		'videoRecording': 'Video Recording',
+		'webpage': 'Web Page'
+	};
+
+  // Define a function that takes an item type and returns its label
+  function getItemTypeLabel(itemType) {
+	// Check if the item type is valid
+	if (itemTypeLabels.hasOwnProperty(itemType)) {
+	  // Return the corresponding label
+	  return itemTypeLabels[itemType];
+	} else {
+	  // Return an error message
+	  return 'Invalid item type';
+	}
+  }
+  
   function doExport() {
 	Zotero.write('%%tana%%\n');
 	var item;
 	var supertag = "#Document";
+	
 	while (item = Zotero.nextItem()) {
 	  // ref
 	  Zotero.write('- ' + item.title);
@@ -63,7 +116,8 @@
 	  Zotero.write('  - Author:: \n');
 	  // write authors as indented nodes
 	  for (author in item.creators){
-		Zotero.write('    - [[' + (item.creators[author].firstName||'') + ' ' + (item.creators[author].lastName||'') + ']] #person \n');
+		var authorName = (item.creators[author].firstName || '') + ' ' + (item.creators[author].lastName || '');
+		Zotero.write('    - [[' + authorName.trim() + ']] #person \n');
 	  }
 	  //Zotero.write('\n');
 
@@ -88,8 +142,9 @@
 
 	  // type
 	  Zotero.write('  - Type (Zotero):: ')
-	  Zotero.write((item.itemType ||'')+ '\n')
-
+	  //Zotero.write((item.itemType ||'')+ '\n')
+	  Zotero.write((getItemTypeLabel(item.itemType) ||'')+ '\n')
+	  
 	  // zotero link
 	  var library_id = item.libraryID ? item.libraryID : 0;  
 	  var itemLink = 'zotero://select/items/' + library_id + '_' + item.key;
