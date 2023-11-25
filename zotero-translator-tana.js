@@ -117,7 +117,7 @@
 	  // write authors as indented nodes
 	  for (author in item.creators){
 		var authorName = (item.creators[author].firstName || '') + ' ' + (item.creators[author].lastName || '');
-		Zotero.write('    - [[' + authorName.trim() + ']] #person \n');
+		Zotero.write('    - [[' + authorName.trim() + ']]\n');
 	  }
 	  //Zotero.write('\n');
 
@@ -137,8 +137,19 @@
 	  Zotero.write((item.publicationTitle ||'')+ '\n')
 
 	  // language
-	  Zotero.write('  - Language:: ')
-	  Zotero.write((item.language ||'')+ '\n')
+	  if (item.itemType == 'computerProgram') {
+		Zotero.write('  - Programming Language:: ')
+		Zotero.write((item.programmingLanguage ||'')+ '\n')
+		// rights
+		Zotero.write('  - License:: ')
+		Zotero.write((item.rights ||'')+ '\n')
+		// libraryCatalog
+		Zotero.write('  - Listed on:: ')
+		Zotero.write((item.libraryCatalog ||'')+ '\n')
+	  } else {
+		Zotero.write('  - Language:: ')
+		Zotero.write((item.language ||'')+ '\n')
+      }
 
 	  // type
 	  Zotero.write('  - Type (Zotero):: ')
