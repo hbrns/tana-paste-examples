@@ -136,13 +136,14 @@
 	  Zotero.write('  - Published by:: ')
 	  Zotero.write((item.publicationTitle ||'')+ '\n')
 
+	  // rights
+	  Zotero.write('  - License:: ')
+	  Zotero.write((item.rights ||'')+ '\n')
+
 	  // language
 	  if (item.itemType == 'computerProgram') {
 		Zotero.write('  - Programming Language:: ')
 		Zotero.write((item.programmingLanguage ||'')+ '\n')
-		// rights
-		Zotero.write('  - License:: ')
-		Zotero.write((item.rights ||'')+ '\n')
 		// libraryCatalog
 		Zotero.write('  - Listed on:: ')
 		Zotero.write((item.libraryCatalog ||'')+ '\n')
@@ -166,7 +167,10 @@
 	  // url with citation
 	  Zotero.write('  - URL:: ' + (item.url||'') + '\n')
 	  
-	  Zotero.write('  - Abstract:: '+  (item.abstractNote || '')+ '\n')
+	  abstract = item.abstractNote.replace(/^\s*[\r\n]/gm, "")
+	  abstract = abstract.replace(/^-/gm, '\t\t-')
+	  abstract = abstract.replace(/^/gm, '\t')
+	  Zotero.write('  - Abstract:: '+  (abstract || '')+ '\n')
 	}
   }
 /** BEGIN TEST CASES **/
