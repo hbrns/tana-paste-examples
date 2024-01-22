@@ -200,7 +200,6 @@ function doExport() {
 					paragraphs.shift();
 				}
 				paragraphs.forEach((paragraph, i) => {
-					// Zotero.write(`    >>> Paragraph ${i+1}: ${paragraph} <<<\n`);
 					Zotero.write('      - ' + paragraph + '\n');
 				});
 			});
