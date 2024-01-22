@@ -175,7 +175,6 @@ function doExport() {
 		// notes
 		if (item.notes && item.notes.length > 0) {
 			let doc = new DOMParser().parseFromString('<div class="zotero-notes"/>', 'text/html');
-			let container = doc.body.firstChild;
 			let div = doc.createElement('div');
 			div.className = 'zotero-note';
 			Zotero.write('  - Notes::\n');
