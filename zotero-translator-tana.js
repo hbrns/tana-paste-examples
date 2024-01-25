@@ -117,19 +117,19 @@ function doExport() {
 		// write authors as indented nodes
 		for (author in item.creators) {
 			var authorName = (item.creators[author].firstName || '') + ' ' + (item.creators[author].lastName || '');
-			Zotero.write('    - ' + authorName.trim() + '\n');
+			Zotero.write('    - [[' + authorName.trim() + ' #person]]\n');
 		}
 
 		// year
 		var date = Zotero.Utilities.strToDate(item.date);
 		var dateS = (date.year) ? date.year : item.date;
 		Zotero.write('  - Year:: ')
-		Zotero.write(('[[' + dateS + ']] ' || '') + '\n')
+		Zotero.write(('[[date:' + dateS + ']] ' || '') + '\n')
 
 		// accessDate
 		if (item.accessDate) {
 			Zotero.write('  - Accessed:: ')
-			Zotero.write(('[[' + item.accessDate + ']] ' || '') + '\n')
+			Zotero.write(('[[date:' + item.accessDate + ']] ' || '') + '\n')
 		}
 
 		// publication
@@ -137,8 +137,10 @@ function doExport() {
 		Zotero.write((item.publicationTitle || '') + '\n')
 
 		// rights
-		Zotero.write('  - License:: ')
-		Zotero.write((item.rights || '') + '\n')
+		if (item.rights) {
+			Zotero.write('  - License:: ')
+			Zotero.write((item.rights || '') + '\n')
+		}
 
 		// language
 		if (item.itemType == 'computerProgram') {
