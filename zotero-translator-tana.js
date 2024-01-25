@@ -40,6 +40,7 @@ const itemTypeLabels = {
 	'note': 'Note',
 	'patent': 'Patent',
 	'podcast': 'Podcast',
+	'preprint': 'Preprint',
 	'presentation': 'Presentation',
 	'radioBroadcast': 'Radio Broadcast',
 	'report': 'Report',
